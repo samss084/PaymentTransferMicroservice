@@ -1,0 +1,16 @@
+logging:
+  level: ERROR
+  loggers:
+    "io.dropwizard": INFO
+  appenders:
+    - type: console
+swagger:
+  resourcePackage: com.revolut.resource
+server:
+  applicationConnectors:
+  - type: http
+    port: 8090
+  adminConnectors:
+  - type: http
+    port: 8091
+  rootPath: /api/payment-transfer
