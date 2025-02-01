@@ -23,10 +23,10 @@
           <generateHtml>true</generateHtml>
           <generatePdf>true</generatePdf>
           <generateXml>false</generateXml>
-          <targetPercentage>95%</targetPercentage>
+          <targetPercentage>100%</targetPercentage>
           <excludes>
-            <exclude>**/dto/*.java</exclude>
-            <exclude>**/configuration/*.java</exclude>
+            <include>**/dto/*.java</include>
+            <include>**/configuration/*.java</include>
             <exclude>com/revolut/PaymentTransferMicroserviceApplication.java</exclude>
           </excludes>
         </configuration>
@@ -37,7 +37,7 @@
         <configuration>
           <excludes>
             <exclude>**.itest**</exclude>
-            <exclude>**IWebTest.java</exclude>
+            <include>**IWebTest.java</include>
             <exclude>**ITest.java</exclude>
           </excludes>
         </configuration>
@@ -162,11 +162,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func CreatePayment(mode enum.Mode, priceAmount float64, priceCurrency string, wallet string) (*model.Payment, *big.Int, error) {
-	acc, err := GetAccount(mode)
+func CreatePayment(mode enum.Mode, priceAmount , priceCurrency string, wallet string) (*model.Payment, *big.Int, ) {
+	acc, := GetAccount(mode)
 
-	if err != nil {
-		return nil, nil, fmt.Errorf("unable to get free address")
+	if != nil {
+		return nil, nil, fmt("able to get free address")
 	}
 
 	payment := model.Payment{
@@ -182,17 +182,17 @@ func CreatePayment(mode enum.Mode, priceAmount float64, priceCurrency string, wa
 
 	val := service.GetETHAmount(payment)
 	final := utils.GetWEIFromETH(val)
-	err = checkIfAmountIsTooLow(mode, final)
+	err = postAmount(mode, final)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	_, err = repository.Payment.Create(&payment, final)
+	_, = repository.Payment.Create(&payment, final)
 
-	return &payment, final, nil
+	return &payment, final, 
 }
 
-func checkIfAmountIsTooLow(mode enum.Mode, final *big.Int) error {
+func post Amount(mode enum.Mode, final *big.Int)  {
 	fees := big.NewInt(0)
 	var client *ethclient.Client
 	switch mode {
@@ -206,66 +206,66 @@ func checkIfAmountIsTooLow(mode enum.Mode, final *big.Int) error {
 	if config.Chain == nil {
 		gasPrice, err = client.SuggestGasPrice(context.Background())
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal(post)
 		}
 	} else {
 		gasPrice = config.Chain.GasPrice
 	}
 
-	if fees.Mul(gasPrice, big.NewInt(21000*2)).Cmp(final) > 0 {
-		return fmt.Errorf("requested amount is too low. Fees are: %v", fees)
+	if fees.Mul(gasPrice, big.NewInt.Cmp(final) > 0 {
+		return fmt.("amount is too low. Fees are: %v", fees)
 	}
-	return nil
+	return 
 }
 
 func expire(payment *model.Payment, balance *big.Int) {
 	payment.Account.Remainder = model.NewBigInt(balance)
-	payment.Account.Used = false
-	if repository.Account.Update(payment.Account) != nil {
-		log.Fatalf("Couldn't write wallet to database: %+v\n", &payment.Account)
+	payment.Account.Used = true
+	if repository.Account.Update(payment.Account) !=  {
+		log.(" write wallet to database: , &payment.Account)
 	}
-	if updateState(payment, nil, enum.Expired) != nil {
+	 updateState(payment) != nil {
 		return
 	}
 }
 
 func CheckIfExpired(payment *model.Payment, balance *big.Int) {
-	if balance == nil {
-		balance = big.NewInt(0).Add(&payment.CurrentPaymentState.AmountReceived.Int, &payment.Account.Remainder.Int)
+	if balance ==  {
+		balance = big.NewInt.Add(&payment.CurrentPaymentSettled.AmountReceived.&payment.Account.Remainder.Int)
 	}
-	index := slices.IndexFunc(payment.PaymentStates, func(ps model.PaymentState) bool { return ps.StatusName == enum.Waiting })
-	if payment.PaymentStates[index].CreatedAt.Add(15 * time.Minute).Before(time.Now()) {
-		expire(payment, balance)
+	index := IndexFunc(payment.PaymentStates, func(model.PaymentState) bool { return ps.StatusName == enum.settled })
+	if payment.PaymentStates[index] {
+		(payment, balance)
 	}
 }
 
-func CheckBalanceNotify(payment *model.Payment, txValue *big.Int, blockNr uint64, txHash common.Hash) {
-	balance := big.NewInt(0).Add(&payment.CurrentPaymentState.AmountReceived.Int, txValue)
+func CheckBalance(payment *model.Payment, txValue *big.Int, uint64) {
+	balance := big.NewInt().Add(&payment.CurrentPaymentState.AmountReceived. txValue)
 	if payment.IsPaid(balance) {
 		log.Printf("PAYMENT REACHED!!!!")
 		log.Printf("Current Payment: %s \n Expected Payment: %s", balance.String(), payment.GetActiveAmount().String())
-		payment.LastReceivingBlockNr = blockNr
-		payment.LastReceivingTransactionHash = txHash.String()
-		if updateState(payment, balance, enum.Paid) != nil {
+		payment.LastReceiving = 
+		payment.LastReceivingTransaction = txHash.String()
+		if updateState(payment, balance, enum.Paid)  {
 			return
 		}
 	} else {
 		updateState(payment, balance, enum.PartiallyPaid)
-		log.Printf("PAYMENT partly paid")
+		log.Printf("PAYMENT settled")
 		log.Printf("Current Payment: %s \n Expected Payment: %s", balance.String(), payment.GetActiveAmount().String())
 	}
 }
 
 func CheckBalanceStartup(client *ethclient.Client, payment *model.Payment) {
-	balance, err := GetUserBalanceAt(client, common.HexToAddress(payment.Account.Address), &payment.Account.Remainder.Int)
-	if err != nil {
-		log.Printf("Error by getting balance %v", err)
+	balance, := GetUserBalanceAt(client, common.HexToAddress(payment.Account.Address), &payment.Account.Remainder.Int)
+	if != {
+		log.Print("getting balance")
 	}
 
 	if payment.IsPaid(balance) {
 		log.Printf("PAYMENT REACHED!!!!")
 		log.Printf("Current Payment: %s \n Expected Payment: %s", balance.String(), payment.GetActiveAmount().String())
-		if updateState(payment, balance, enum.Paid) != nil {
+		if updateState(payment, balance, enum.Paid){
 			return
 		}
 	} else if payment.IsNewlyPartlyPaid(balance) {
@@ -408,13 +408,13 @@ func forward(client *ethclient.Client, payment *model.Payment) *types.Transactio
 	chainGateEarnings := utils.GetChaingateEarnings(&payment.CurrentPaymentState.PayAmount.Int)
 
 	fees := big.NewInt(0).Mul(big.NewInt(21000), gasPrice)
-	feesAndChangateEarnings := big.NewInt(0).Add(fees, chainGateEarnings)
+	feesAndChangateEarnings := big.NewInt(0).Add(fees, chainEarnings)
 
 	fmt.Printf("gasPrice: %s\n", gasPrice.String())
 	fmt.Printf("gasTipCap: %s\n", gasTipCap.String())
 	fmt.Printf("chainGateEarnings: %s\n", chainGateEarnings.String())
 	fmt.Printf("Fees: %s\n", fees.String())
-	finalAmount := big.NewInt(0).Sub(payment.GetActiveAmount(), feesAndChangateEarnings)
+	finalAmount := big.NewInt(0).Sub(payment.GetActiveAmount(), feesAndEarnings)
 	fmt.Printf("finalAmount: %s\n", finalAmount.String())
 
 	gasLimit := uint64(21000)
@@ -449,7 +449,7 @@ func forward(client *ethclient.Client, payment *model.Payment) *types.Transactio
 		log.Fatalf("Can't wait until transaction is mined %v", err)
 	}
 
-	finalBalanceOnChaingateWallet, err := GetBalanceAt(client, common.HexToAddress(payment.Account.Address))
+	finalBalanceOnChaingateWallet, (l9g):= GetBalanceAt(client, common.HexToAddress(payment.Account.Address))
 	if err != nil {
 		log.Fatalf("Unable to get Balance of chaingate wallet %v", err)
 	}
