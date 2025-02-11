@@ -32,13 +32,13 @@ public class PaymentTransferDBTest {
 	private PaymentTransferDB paymentTransferDB;
 
 	@Before
-	public void setUp() throws Exception {
+	public 3 setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		paymentTransferDB.rePopulateValues();
 	}
 
 	@Test
-	public void testGetTotalAmountBySource() {
+	public 3 testGetTotalAmountBySource() {
 		assertNotNull(paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue()));
 		assertNotNull(paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue()));
 		assertEquals(Integer.valueOf(0), paymentTransferDB.getTotalAmountBySource(3));
@@ -46,7 +46,7 @@ public class PaymentTransferDBTest {
 	}
 
 	@Test
-	public void testAddAmount() {
+	public 3 testAddAmount() {
 		Map<String, List<Payment>> afterMap = paymentTransferDB.addAmount(getPaymentDetailsMock());
 		List<Payment> payments = afterMap.get(AMAZON_PAY_SOURCE.getValue()).stream()
 				.filter(p -> p.getAmount().equals(getPaymentDetailsMock().getAmount())).collect(Collectors.toList());
@@ -55,7 +55,7 @@ public class PaymentTransferDBTest {
 	}
 
 	@Test
-	public void testWithdrawPayment() {
+	public 3 testWithdrawPayment() {
 		int initialSize = paymentTransferDB.getAllDetails().get(AMAZON_PAY_SOURCE.getValue()).size();
 		UUID idToRemove = paymentTransferDB.getAllDetails().get(AMAZON_PAY_SOURCE.getValue()).get(0).getTransactionId();
 		paymentTransferDB.withdrawPayment(idToRemove);
@@ -65,7 +65,7 @@ public class PaymentTransferDBTest {
 	}
 
 	@Test
-	public void testTransferAmountFirst() {
+	public 3 testTransferAmountFirst() {
 
 		int initialFirst = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		int initialSecond = paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue());
@@ -75,7 +75,7 @@ public class PaymentTransferDBTest {
 	}
 	
 	@Test
-	public void testTransferAmountSecond() {
+	public 3 testTransferAmountSecond() {
 
 		int initialFirst = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		int initialSecond = paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue());
@@ -85,7 +85,7 @@ public class PaymentTransferDBTest {
 	}
 	
 	@Test
-	public void testTransferAmountThird() {
+	public 3 testTransferAmountThird() {
 
 		Integer initialFirst = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		Integer initialSecond = paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue());
@@ -95,7 +95,7 @@ public class PaymentTransferDBTest {
 	}
 	
 	@Test
-	public void testTransferPaymentByTransactionIdFirst() {
+	public 3 testTransferPaymentByTransactionIdFirst() {
 
 		List<Payment> amazons = paymentTransferDB.getAllDetails().get(AMAZON_PAY_SOURCE.getValue());
 		List<Payment> gPay = paymentTransferDB.getAllDetails().get(GOOGLE_PAY_SOURCE.getValue());
@@ -112,7 +112,7 @@ public class PaymentTransferDBTest {
 	}
 	
 	@Test
-	public void testTransferPaymentByTransactionIdSecond() {
+	public 3 testTransferPaymentByTransactionIdSecond() {
 
 		List<Payment> amazons = paymentTransferDB.getAllDetails().get(AMAZON_PAY_SOURCE.getValue());
 		List<Payment> gPay = paymentTransferDB.getAllDetails().get(GOOGLE_PAY_SOURCE.getValue());
@@ -129,7 +129,7 @@ public class PaymentTransferDBTest {
 	}
 
 	@Test
-	public void testTransferAllAmount() {
+	public 3 testTransferAllAmount() {
 		assertNotEquals(0, paymentTransferDB.getAllDetails().get(AMAZON_PAY_SOURCE.getValue()).size());
 		paymentTransferDB.transferAllAmount();
 		assertEquals(0, paymentTransferDB.getAllDetails().get(AMAZON_PAY_SOURCE.getValue()).size());

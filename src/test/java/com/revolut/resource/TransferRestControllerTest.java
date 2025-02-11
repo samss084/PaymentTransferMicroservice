@@ -31,13 +31,13 @@ public class TransferRestControllerTest {
 	private PaymentTransferDB paymentTransferDB;
 
 	@Before
-	public void setUp() throws Exception {
+	public 3 setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		paymentTransferDB.rePopulateValues();
 	}
 
 	@Test
-	public void testTransfer() {
+	public 3 testTransfer() {
 		Integer amountOfAmazonAcc = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		Integer amountOfGPayAcc = paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue());
 		assertEquals(Integer.valueOf(0), amountOfGPayAcc);
@@ -47,7 +47,7 @@ public class TransferRestControllerTest {
 	}
 
 	@Test
-	public void testTransferWithAmount() {
+	public 3 testTransferWithAmount() {
 		Integer amountOfAmazonAcc = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		Integer amountOfGPayAcc = paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue());
 		assertEquals(Integer.valueOf(0), amountOfGPayAcc);

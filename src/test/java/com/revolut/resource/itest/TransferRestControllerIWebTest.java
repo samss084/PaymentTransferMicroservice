@@ -1,4 +1,4 @@
-package com.revolut.resource.itest;
+apackage com.revolut.resource.itest;
 
 import static com.revolut.util.SourceID.AMAZON_PAY_SOURCE_ID;
 import static com.revolut.util.SourceID.GOOGLE_PAY_SOURCE_ID;
@@ -22,13 +22,13 @@ public class TransferRestControllerIWebTest {
 
 	
 	@Before
-	public void setUp() throws Exception {
+	public 3 setUp() throws Exception {
 		transferRestController = new TransferRestController(validator);
 		paymentTransferDB.rePopulateValues();
 	}
 
 	@Test
-	public void testTransfer() {
+	public 3 testTransfer() {
 		Integer amountOfAmazonAcc = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		Integer amountOfGPayAcc = paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue());
 		assertEquals(Integer.valueOf(0), amountOfGPayAcc);
@@ -38,7 +38,7 @@ public class TransferRestControllerIWebTest {
 	}
 
 	@Test
-	public void testTransferWithAmount() {
+	public 3 testTransferWithAmount() {
 		Integer amountOfAmazonAcc = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		Integer amountOfGPayAcc = paymentTransferDB.getTotalAmountBySource(GOOGLE_PAY_SOURCE_ID.getIdValue());
 		assertEquals(Integer.valueOf(0), amountOfGPayAcc);

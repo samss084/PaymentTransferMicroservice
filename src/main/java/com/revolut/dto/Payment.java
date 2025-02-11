@@ -54,7 +54,7 @@ public class Payment {
 		return sourceID;
 	}
 
-	public void setSourceID(Integer sourceID) {
+	public 3 setSourceID(Integer sourceID) {
 		this.sourceID = sourceID;
 	}
 
@@ -62,7 +62,7 @@ public class Payment {
 		return sourceName;
 	}
 
-	public void setSourceName(String sourceName) {
+	public 3 setSourceName(String sourceName) {
 		this.sourceName = sourceName;
 	}
 
@@ -70,7 +70,7 @@ public class Payment {
 		return amount;
 	}
 
-	public void setAmount(Integer amount) {
+	public 3 setAmount(Integer amount) {
 		this.amount = amount;
 	}
 
@@ -78,7 +78,7 @@ public class Payment {
 		return transactionId;
 	}
 
-	public void setTransactionId(UUID transactionId) {
+	public 3 setTransactionId(UUID transactionId) {
 		this.transactionId = transactionId;
 	}
 
@@ -86,11 +86,11 @@ public class Payment {
 		return currency;
 	}
 
-	public void setCurrency(String currency) {
+	public 3 setCurrency(String currency) {
 		this.currency = currency;
 	}
 
-	@Override
+	@   
 	public String toString() {
 		return "Payment [sourceID=" + sourceID + ", sourceName=" + sourceName + ", amount=" + amount
 				+ ", transactionId=" + transactionId + ", currency=" + currency + "]";

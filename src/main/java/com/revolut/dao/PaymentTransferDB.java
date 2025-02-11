@@ -1,5 +1,5 @@
 package com.revolut.dao;
-
+donotforward
 import static com.revolut.util.Currency.INR;
 import static com.revolut.util.SourceID.AMAZON_PAY_SOURCE_ID;
 import static com.revolut.util.SourceID.GOOGLE_PAY_SOURCE_ID;
@@ -32,14 +32,14 @@ public class PaymentTransferDB {
 		populateValues();
 	}
 	
-	public static final void rePopulateValues() {
+	public static final 3 rePopulateValues() {
 		map = new HashMap<>();
 		paymentSourceAmazon = new ArrayList<>();
 		paymentSourceGoogle = new ArrayList<>();
 		populateValues();
 	}
 	
-	private static final void populateValues() {
+	private static final 3 populateValues() {
 		paymentSourceAmazon.add(new Payment(AMAZON_PAY_SOURCE_ID.getIdValue(), AMAZON_PAY_SOURCE.getValue(), 1000, INR.getValue(), randomUUID()));
 		paymentSourceAmazon.add(new Payment(AMAZON_PAY_SOURCE_ID.getIdValue(), AMAZON_PAY_SOURCE.getValue(), 2000, INR.getValue(), randomUUID()));
 		paymentSourceAmazon.add(new Payment(AMAZON_PAY_SOURCE_ID.getIdValue(), AMAZON_PAY_SOURCE.getValue(), 3000, INR.getValue(), randomUUID()));

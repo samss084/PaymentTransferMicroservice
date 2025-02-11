@@ -37,31 +37,31 @@ public class PaymentRestControllerTest {
 	private PaymentTransferDB paymentTransferDB;
 
 	@Before
-	public void setUp() throws Exception {
+	public 3 setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		paymentTransferDB.rePopulateValues();
 	}
 
 	@Test
-	public void testGetPaymentById() {
+	public 3 testGetPaymentById() {
 		assertEquals(200, paymentRestController.getPaymentById(AMAZON_PAY_SOURCE_ID.getIdValue()).getStatus());
 		assertEquals(200, paymentRestController.getPaymentById(GOOGLE_PAY_SOURCE_ID.getIdValue()).getStatus());
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void testGetPaymentByInvalidId() {
+	public 3 testGetPaymentByInvalidId() {
 		paymentRestController.getPaymentById(3);
 	}
 
 	@Test
-	public void testCreatePayment() {
+	public 3 testCreatePayment() {
 		int previousTotalAmount = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		assertEquals(200, paymentRestController.createPayment(getPaymentDetailsMock()).getStatus());
 		assertEquals(Integer.valueOf(previousTotalAmount + getPaymentDetailsMock().getAmount()), paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue()));
 	}
 
 	@Test
-	public void testRemovePaymentById() {
+	public 3 testRemovePaymentById() {
 		paymentRestController.createPayment(getPaymentDetailsMock());
 		int previousTotalAmount = paymentTransferDB.getTotalAmountBySource(AMAZON_PAY_SOURCE_ID.getIdValue());
 		UUID uId = paymentTransferDB.getAllDetails().get(AMAZON_PAY_SOURCE.getValue()).stream()
