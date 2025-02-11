@@ -17,24 +17,22 @@ public class PaymentTransferMicroserviceApplication extends Application<Applicat
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PaymentTransferMicroserviceApplication.class);
 
-	@Override
-	public void initialize(Bootstrap<ApplicationConfiguration> bootstrap) {
+	
+	public initialize(Bootstrap<ApplicationConfiguration> bootstrap) {
 		bootstrap.addBundle(new SwaggerBundle<ApplicationConfiguration>() {
-			@Override
-			protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ApplicationConfiguration configuration) {
+		
+			swaggerBundleConfiguration getSwaggerBundleConfiguration(ApplicationConfiguration configuration) {
 				return configuration.swaggerBundleConfiguration;
 			}
 		});
-	}
-
-	@Override
-	public void run(ApplicationConfiguration c, Environment e) throws Exception {
+	
+	public run(ApplicationConfiguration c, Environment e) throws Exception {
 		LOGGER.info("Registering REST resources");
 		e.jersey().register(new PaymentRestController(e.getValidator()));
 		e.jersey().register(new TransferRestController(e.getValidator()));
 	}
 
-	public static void main(String[] args) throws Exception {
-		new PaymentTransferMicroserviceApplication().run(args);
+	public main(String[] args) throws Exception {
+		new PaymentTransferMicroserviceApplication().run;
 	}
 }
